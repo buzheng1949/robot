@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+		PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<!--导入属性配置-->
+	<properties resource="datasource.properties"></properties>
+
+	<!--指定特定数据库的jdbc驱动jar包的位置-->
+	<classPathEntry location="${db.driverLocation}"/>
+
+	<context id="default" targetRuntime="MyBatis3">
+
+		<!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+		<!-- 注释控制完毕 -->
+
+		<!--jdbc的数据库连接 -->
+		<jdbcConnection
+				driverClass="${db.driverClassName}"
+				connectionURL="${db.url}"
+				userId="${db.username}"
+				password="${db.password}">
+		</jdbcConnection>
+
+		<javaTypeResolver >
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 数据表对应的model 层  -->
+		<javaModelGenerator targetPackage="com.robot.model" targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- sql mapper 隐射配置文件 -->
+		<sqlMapGenerator targetPackage="mapper"  targetProject="./src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- dao层，在mybatis3中，其实就是mapper接口 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.robot.dao"  targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+
+
+		<table tableName="user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+
+
+	</context>
+</generatorConfiguration>
